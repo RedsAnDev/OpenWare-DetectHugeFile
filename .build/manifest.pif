@@ -5,11 +5,11 @@
       "name" : "DetectHugeFile",
       "path" : "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile",
       "projects" : [
-        "c430bdf82837bed64806e65ce9453e71357fb8061b164d17f0ffa9f77585e256",
+        "363bbf6b9c735ac13b499b85c7c9f32334a5c4cffbb3a5d09c77339d5314adc6",
         "aef6a16c3dd32197c6e3c820a82623ef533d0e16ae51d1f390ab24f2dc78bb5c"
       ]
     },
-    "signature" : "eafd64c795e63f07d82d3421d208c20e85ee83f7b0490f32d885126b96243644",
+    "signature" : "b49d8c3fb90ac7149f182733f73bb413b9a564ac5eb6fbbcd29155d85de9e98f",
     "type" : "workspace"
   },
   {
@@ -265,6 +265,14 @@
               {
                 "fileType" : "sourcecode.swift",
                 "guid" : "PACKAGE:detecthugefile::MAINGROUP::REF_2::REF_8",
+                "name" : "MCP.swift",
+                "path" : "MCP.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:detecthugefile::MAINGROUP::REF_2::REF_9",
                 "name" : "Node.swift",
                 "path" : "Node.swift",
                 "sourceTree" : "<group>",
@@ -272,7 +280,7 @@
               },
               {
                 "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:detecthugefile::MAINGROUP::REF_2::REF_9",
+                "guid" : "PACKAGE:detecthugefile::MAINGROUP::REF_2::REF_10",
                 "name" : "OutlineView.swift",
                 "path" : "OutlineView.swift",
                 "sourceTree" : "<group>",
@@ -280,7 +288,7 @@
               },
               {
                 "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:detecthugefile::MAINGROUP::REF_2::REF_10",
+                "guid" : "PACKAGE:detecthugefile::MAINGROUP::REF_2::REF_11",
                 "name" : "Scanner.swift",
                 "path" : "Scanner.swift",
                 "sourceTree" : "<group>",
@@ -288,7 +296,7 @@
               },
               {
                 "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:detecthugefile::MAINGROUP::REF_2::REF_11",
+                "guid" : "PACKAGE:detecthugefile::MAINGROUP::REF_2::REF_12",
                 "name" : "SystemTab.swift",
                 "path" : "SystemTab.swift",
                 "sourceTree" : "<group>",
@@ -296,7 +304,7 @@
               },
               {
                 "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:detecthugefile::MAINGROUP::REF_2::REF_12",
+                "guid" : "PACKAGE:detecthugefile::MAINGROUP::REF_2::REF_13",
                 "name" : "Treemap.swift",
                 "path" : "Treemap.swift",
                 "sourceTree" : "<group>",
@@ -304,7 +312,7 @@
               },
               {
                 "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:detecthugefile::MAINGROUP::REF_2::REF_13",
+                "guid" : "PACKAGE:detecthugefile::MAINGROUP::REF_2::REF_14",
                 "name" : "WellKnown.swift",
                 "path" : "WellKnown.swift",
                 "sourceTree" : "<group>",
@@ -312,7 +320,7 @@
               },
               {
                 "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:detecthugefile::MAINGROUP::REF_2::REF_14",
+                "guid" : "PACKAGE:detecthugefile::MAINGROUP::REF_2::REF_15",
                 "name" : "main.swift",
                 "path" : "main.swift",
                 "sourceTree" : "<group>",
@@ -394,6 +402,14 @@
               {
                 "fileType" : "sourcecode.swift",
                 "guid" : "PACKAGE:detecthugefile::MAINGROUP::REF_3::REF_8",
+                "name" : "MCP.swift",
+                "path" : "MCP.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:detecthugefile::MAINGROUP::REF_3::REF_9",
                 "name" : "Node.swift",
                 "path" : "Node.swift",
                 "sourceTree" : "<group>",
@@ -401,7 +417,7 @@
               },
               {
                 "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:detecthugefile::MAINGROUP::REF_3::REF_9",
+                "guid" : "PACKAGE:detecthugefile::MAINGROUP::REF_3::REF_10",
                 "name" : "OutlineView.swift",
                 "path" : "OutlineView.swift",
                 "sourceTree" : "<group>",
@@ -409,7 +425,7 @@
               },
               {
                 "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:detecthugefile::MAINGROUP::REF_3::REF_10",
+                "guid" : "PACKAGE:detecthugefile::MAINGROUP::REF_3::REF_11",
                 "name" : "Scanner.swift",
                 "path" : "Scanner.swift",
                 "sourceTree" : "<group>",
@@ -417,7 +433,7 @@
               },
               {
                 "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:detecthugefile::MAINGROUP::REF_3::REF_11",
+                "guid" : "PACKAGE:detecthugefile::MAINGROUP::REF_3::REF_12",
                 "name" : "SystemTab.swift",
                 "path" : "SystemTab.swift",
                 "sourceTree" : "<group>",
@@ -425,7 +441,7 @@
               },
               {
                 "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:detecthugefile::MAINGROUP::REF_3::REF_12",
+                "guid" : "PACKAGE:detecthugefile::MAINGROUP::REF_3::REF_13",
                 "name" : "Treemap.swift",
                 "path" : "Treemap.swift",
                 "sourceTree" : "<group>",
@@ -433,7 +449,7 @@
               },
               {
                 "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:detecthugefile::MAINGROUP::REF_3::REF_13",
+                "guid" : "PACKAGE:detecthugefile::MAINGROUP::REF_3::REF_14",
                 "name" : "WellKnown.swift",
                 "path" : "WellKnown.swift",
                 "sourceTree" : "<group>",
@@ -441,7 +457,7 @@
               },
               {
                 "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:detecthugefile::MAINGROUP::REF_3::REF_14",
+                "guid" : "PACKAGE:detecthugefile::MAINGROUP::REF_3::REF_15",
                 "name" : "main.swift",
                 "path" : "main.swift",
                 "sourceTree" : "<group>",
@@ -467,12 +483,12 @@
       "projectIsPackage" : "true",
       "projectName" : "DetectHugeFile",
       "targets" : [
-        "b2fb96a6fe02e7d9510a0f918c279466ecf347ddfd94034215d6067c364d89d4",
-        "d8d9323a66ef5bdae478204dc2cbd0836b8e7242f012075b637f9ffd286bf51a",
+        "e589e06362c32a2609fbfa306fb6e440cb301547b75a708ea4b91f514778073e",
+        "6ae68851d88dc4bf7ebe6b506233e047670ecbb677a5bb25a4a65e67cf221510",
         "f90b22e1a7efabb6fa349aad165e917c670a3e72af3d793a97e8aacd25f368bb"
       ]
     },
-    "signature" : "c430bdf82837bed64806e65ce9453e71357fb8061b164d17f0ffa9f77585e256",
+    "signature" : "363bbf6b9c735ac13b499b85c7c9f32334a5c4cffbb3a5d09c77339d5314adc6",
     "type" : "project"
   },
   {
@@ -711,6 +727,15 @@
 
               ],
               "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:detecthugefile::MAINGROUP::REF_2::REF_15",
+              "guid" : "PACKAGE-PRODUCT:detecthugefile_DetectHugeFile.DetectHugeFile::BUILDPHASE_0::15",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
             }
           ],
           "guid" : "PACKAGE-PRODUCT:detecthugefile_DetectHugeFile.DetectHugeFile::BUILDPHASE_0",
@@ -736,7 +761,7 @@
       "productTypeIdentifier" : "com.apple.product-type.tool",
       "type" : "standard"
     },
-    "signature" : "b2fb96a6fe02e7d9510a0f918c279466ecf347ddfd94034215d6067c364d89d4",
+    "signature" : "e589e06362c32a2609fbfa306fb6e440cb301547b75a708ea4b91f514778073e",
     "type" : "target"
   },
   {
@@ -1006,6 +1031,15 @@
 
               ],
               "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:detecthugefile::MAINGROUP::REF_3::REF_15",
+              "guid" : "PACKAGE-TARGET:DetectHugeFile-6A18EE08A5665F70-testable::BUILDPHASE_0::15",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
             }
           ],
           "guid" : "PACKAGE-TARGET:DetectHugeFile-6A18EE08A5665F70-testable::BUILDPHASE_0",
@@ -1031,7 +1065,7 @@
       "productTypeIdentifier" : "org.swift.product-type.common.object",
       "type" : "standard"
     },
-    "signature" : "d8d9323a66ef5bdae478204dc2cbd0836b8e7242f012075b637f9ffd286bf51a",
+    "signature" : "6ae68851d88dc4bf7ebe6b506233e047670ecbb677a5bb25a4a65e67cf221510",
     "type" : "target"
   },
   {

@@ -35,6 +35,49 @@ final class DupState: @unchecked Sendable {
     var stage: String { get { lock.lock(); defer { lock.unlock() }; return _stage } set { lock.lock(); _stage = newValue; lock.unlock() } }
 }
 
+/// Duplicati reali: stessa dimensione → hash del primo MB → SHA-256 completo. Usabile da qualunque thread.
+func computeDuplicates(_ all: [(String, UInt64, Int64)], state: DupState) -> [DupGroup] {
+        func isCancelled() -> Bool { state.cancelled }
+        func setStage(_ s: String) { state.stage = s }
+        // 1) stessa dimensione
+        var bySize: [UInt64: [(String, Int64)]] = [:]
+        for (p, s, m) in all { bySize[s, default: []].append((p, m)) }
+        let candidates = bySize.filter { $0.value.count > 1 }
+        let total = candidates.values.reduce(0) { $0 + $1.count }
+
+        // 2) hash parziale (primo MB), poi 3) hash completo solo dei sopravvissuti
+        func refine(_ items: [(size: UInt64, path: String, mtime: Int64)], limit: Int?, label: String) -> [String: [(size: UInt64, path: String, mtime: Int64)]] {
+            var result: [String: [(size: UInt64, path: String, mtime: Int64)]] = [:]
+            let lock = NSLock()
+            var done = 0
+            DispatchQueue.concurrentPerform(iterations: items.count) { i in
+                if isCancelled() { return }
+                let it = items[i]
+                if let h = hashFile(it.path, limit: limit) {
+                    lock.lock()
+                    result["\(it.size)-\(h)", default: []].append(it)
+                    done += 1
+                    if done % 20 == 0 { setStage("\(label): \(done)/\(items.count)") }
+                    lock.unlock()
+                }
+            }
+            return result
+        }
+
+        let flat = candidates.flatMap { (s, v) in v.map { (size: s, path: $0.0, mtime: $0.1) } }
+        setStage("Confronto iniziale di \(total) file…")
+        let partial = refine(flat, limit: 1 << 20, label: "Confronto iniziale")
+        let survivors = partial.values.filter { $0.count > 1 }.flatMap { $0 }
+        let full = refine(survivors, limit: nil, label: "Verifica completa")
+
+        var groups: [DupGroup] = []
+        for (key, v) in full where v.count > 1 {
+            groups.append(DupGroup(id: key, size: v[0].size, files: v.map { DupFile(id: $0.path, mtime: $0.mtime) }.sorted { $0.mtime < $1.mtime }))
+        }
+        groups.sort { $0.wasted > $1.wasted }
+        return groups
+}
+
 @MainActor
 final class DuplicatesModel: ObservableObject {
     @Published var groups: [DupGroup] = []
@@ -95,45 +138,8 @@ final class DuplicatesModel: ObservableObject {
     }
 
     private nonisolated static func analyze(_ all: [(String, UInt64, Int64)], _ state: DupState, _ model: DuplicatesModel) {
-        func isCancelled() -> Bool { state.cancelled }
-        func setStage(_ s: String) { state.stage = s }
-        // 1) stessa dimensione
-        var bySize: [UInt64: [(String, Int64)]] = [:]
-        for (p, s, m) in all { bySize[s, default: []].append((p, m)) }
-        let candidates = bySize.filter { $0.value.count > 1 }
-        let total = candidates.values.reduce(0) { $0 + $1.count }
-
-        // 2) hash parziale (primo MB), poi 3) hash completo solo dei sopravvissuti
-        func refine(_ items: [(size: UInt64, path: String, mtime: Int64)], limit: Int?, label: String) -> [String: [(size: UInt64, path: String, mtime: Int64)]] {
-            var result: [String: [(size: UInt64, path: String, mtime: Int64)]] = [:]
-            let lock = NSLock()
-            var done = 0
-            DispatchQueue.concurrentPerform(iterations: items.count) { i in
-                if isCancelled() { return }
-                let it = items[i]
-                if let h = hashFile(it.path, limit: limit) {
-                    lock.lock()
-                    result["\(it.size)-\(h)", default: []].append(it)
-                    done += 1
-                    if done % 20 == 0 { setStage("\(label): \(done)/\(items.count)") }
-                    lock.unlock()
-                }
-            }
-            return result
-        }
-
-        let flat = candidates.flatMap { (s, v) in v.map { (size: s, path: $0.0, mtime: $0.1) } }
-        setStage("Confronto iniziale di \(total) file…")
-        let partial = refine(flat, limit: 1 << 20, label: "Confronto iniziale")
-        let survivors = partial.values.filter { $0.count > 1 }.flatMap { $0 }
-        let full = refine(survivors, limit: nil, label: "Verifica completa")
-
-        var groups: [DupGroup] = []
-        for (key, v) in full where v.count > 1 {
-            groups.append(DupGroup(id: key, size: v[0].size, files: v.map { DupFile(id: $0.path, mtime: $0.mtime) }.sorted { $0.mtime < $1.mtime }))
-        }
-        groups.sort { $0.wasted > $1.wasted }
-        let cancelled = isCancelled()
+        let groups = computeDuplicates(all, state: state)
+        let cancelled = state.cancelled
         DispatchQueue.main.async {
             state.stage = ""
             model.timer?.invalidate()

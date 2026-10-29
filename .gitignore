@@ -1,0 +1,18 @@
+# Swift Package Manager
+.build/
+.swiftpm/
+Package.resolved
+
+# Artefatti di build e release (il DMG va allegato alla Release, non committato)
+dist/
+*.app
+*.dmg
+
+# Icona generata (si rigenera con Tools/make_icon.swift)
+Tools/AppIcon.icns
+
+# macOS / Xcode
+.DS_Store
+xcuserdata/
+*.xcodeproj/
+DerivedData/

@@ -156,9 +156,52 @@ DetectHugeFile.app/Contents/MacOS/DetectHugeFile --known                       #
 DetectHugeFile.app/Contents/MacOS/DetectHugeFile --containers                  # Docker / Podman / minikube
 DetectHugeFile.app/Contents/MacOS/DetectHugeFile --brew                        # riepilogo Homebrew
 DetectHugeFile.app/Contents/MacOS/DetectHugeFile --check --no-notify           # controllo del promemoria
+DetectHugeFile.app/Contents/MacOS/DetectHugeFile --mcp                         # server MCP su stdio (vedi sotto)
 ```
 
 Sono tutte di **sola lettura**. Il vecchio script `detect_huge_files.sh` resta disponibile come report testuale.
+
+---
+
+## Server MCP (uso da Claude)
+
+L'eseguibile include un server **MCP** (Model Context Protocol) su stdio, così Claude può analizzare il disco e
+proporre pulizie con i tuoi stessi motori di scansione. Si registra una volta:
+
+```bash
+claude mcp add detecthugefile -- /Applications/DetectHugeFile.app/Contents/MacOS/DetectHugeFile --mcp
+```
+
+Poi, in una sessione di Claude Code, puoi chiedere ad esempio *"dove sta andando lo spazio sul mio Mac?"*,
+*"quali artefatti non tocco da 3 mesi?"* o *"recuperami 10 GB senza rischi"*.
+
+| Strumento | Cosa fa | Modifica il disco |
+|---|---|---|
+| `list_volumes` | Dischi montati (interni, USB, SD) con spazio libero | no |
+| `scan_folders` | Cartelle più pesanti di un percorso o volume; salva un'istantanea | no |
+| `find_artifacts` | `node_modules`, `target`, `build`, `.venv`… più cache globali e versioni dei gestori (l'attiva è `locked`) | no |
+| `find_duplicates` | Duplicati reali (SHA-256 completo) | no |
+| `known_offenders` | I "colpevoli noti" di macOS con rischio e modo di pulizia | no |
+| `containers_summary` | Docker, Podman, minikube, disco della VM di Podman | no |
+| `brew_summary` | Formule/cask più pesanti, stima cleanup, dipendenze orfane | no |
+| `compare_snapshots` | Cosa è cresciuto fra due scansioni | no |
+| `plan_cleanup` | Piano con motivazione e rischio per ogni voce; con `goal_gb` suggerisce una selezione | **no** |
+| `trash_paths` | Sposta nel Cestino i percorsi indicati | **sì, solo con la tua conferma** |
+| `restore_last` | Annulla l'ultima pulizia (anche quella fatta dall'app) | ripristina |
+
+**Come è protetto `trash_paths`**
+- Appare una **finestra di sistema** costruita dal server con i percorsi reali e le dimensioni, più il motivo dichiarato da
+  Claude. Claude non la vede e non può rispondere al posto tuo. Se la rifiuti o non rispondi entro 180 s, non succede nulla.
+- Va nel **Cestino** (mai `rm`) ed è registrato: `restore_last` o il pulsante *Ripristina* dell'app lo annullano.
+- Rifiuta sempre: percorsi di sistema, cartelle utente di primo livello (Home, Documents, Desktop…), radici dei volumi,
+  credenziali (`~/.ssh`, `~/.gnupg`, `~/.aws`, Keychains) e le versioni attive di nvm/pyenv/rustup/fnm. Massimo 50 percorsi per richiesta.
+- Rispetta la **modalità a secco** dell'app.
+- Non esistono strumenti per `docker prune`, `brew uninstall`, `simctl delete` o per svuotare il Cestino: restano manuali, nell'app.
+
+**Permessi:** il server gira come processo figlio di chi lo avvia (Claude Code, il terminale). Se compaiono
+`access_denied_dirs`, concedi l'*Accesso completo al disco* a quell'applicazione, non a DetectHugeFile.
+
+Le scansioni grandi (home intera) richiedono circa un minuto; i risultati restano in cache 10 minuti nel processo.
 
 ---
 
@@ -252,12 +295,19 @@ Sources/DetectHugeFile/
   Homebrew.swift        formule e cask
   History.swift         istantanee e confronto
   SystemTab.swift       simulatori, backup iOS, snapshot Time Machine
-  Infra.swift           cestino con annulla, modalità a secco, volumi, esportazione, promemoria
+  Infra.swift           cestino con annulla, percorsi protetti, modalità a secco, volumi, esportazione, promemoria
+  MCP.swift             server MCP (strumenti di analisi, plan_cleanup, trash_paths con conferma)
   App.swift             finestra, tab, barra dei menu
   main.swift            modalità da riga di comando
 ```
 
 I dati dell'app (registro del Cestino, istantanee) sono in `~/Library/Application Support/DetectHugeFile/`.
+
+---
+
+## Licenza
+
+Rilasciato con licenza [MIT](LICENSE).
 
 ---
 

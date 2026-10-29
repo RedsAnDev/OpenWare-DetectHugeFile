@@ -131,33 +131,39 @@ func trashLogged(_ path: String, _ log: inout [TrashEntry]) throws {
     if let u = out as URL? { log.append(TrashEntry(original: path, trashed: u.path)) }
 }
 
-@MainActor
-final class TrashLog: ObservableObject {
-    static let shared = TrashLog()
-    @Published private(set) var batches: [TrashBatch] = []
-    private let url: URL
+/// Registro del Cestino su file, condiviso tra app grafica e server MCP (processi diversi): ogni operazione rilegge il file.
+enum TrashLogStore {
+    private static let lock = NSLock()
 
-    init() {
+    static var url: URL {
         let dir = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0].appendingPathComponent("DetectHugeFile")
         try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
-        url = dir.appendingPathComponent("trashlog.json")
-        if let d = try? Data(contentsOf: url), let b = try? JSONDecoder().decode([TrashBatch].self, from: d) { batches = b }
-        // scarta i lotti i cui file non sono più nel Cestino
-        batches = batches.filter { b in b.entries.contains { FileManager.default.fileExists(atPath: $0.trashed) } }
+        return dir.appendingPathComponent("trashlog.json")
     }
 
-    private func save() { if let d = try? JSONEncoder().encode(batches) { try? d.write(to: url) } }
+    private static func readRaw() -> [TrashBatch] {
+        guard let d = try? Data(contentsOf: url), let b = try? JSONDecoder().decode([TrashBatch].self, from: d) else { return [] }
+        return b.filter { batch in batch.entries.contains { FileManager.default.fileExists(atPath: $0.trashed) } }
+    }
 
-    func record(_ label: String, _ entries: [TrashEntry]) {
+    private static func write(_ b: [TrashBatch]) {
+        if let d = try? JSONEncoder().encode(b) { try? d.write(to: url, options: .atomic) }
+    }
+
+    static func load() -> [TrashBatch] { lock.lock(); defer { lock.unlock() }; return readRaw() }
+
+    static func append(_ label: String, _ entries: [TrashEntry]) {
         guard !entries.isEmpty else { return }
-        batches.append(TrashBatch(id: UUID(), date: Date(), label: label, entries: entries))
-        if batches.count > 20 { batches.removeFirst(batches.count - 20) }
-        save()
+        lock.lock(); defer { lock.unlock() }
+        var b = readRaw()
+        b.append(TrashBatch(id: UUID(), date: Date(), label: label, entries: entries))
+        if b.count > 20 { b.removeFirst(b.count - 20) }
+        write(b)
     }
 
-    var lastLabel: String? { batches.last.map { "\($0.label) (\($0.entries.count) elementi)" } }
-
-    func restoreLast() -> String {
+    static func restoreLast() -> String {
+        lock.lock(); defer { lock.unlock() }
+        var batches = readRaw()
         guard let b = batches.last else { return "Niente da ripristinare" }
         let fm = FileManager.default
         var ok = 0, gone = 0, busy = 0
@@ -171,12 +177,50 @@ final class TrashLog: ObservableObject {
             } catch { busy += 1 }
         }
         batches.removeLast()
-        save()
-        var m = "Ripristinati \(ok) elementi"
+        write(batches)
+        var m = "Ripristinati \(ok) elementi (\(b.label))"
         if gone > 0 { m += " · \(gone) non più nel Cestino" }
         if busy > 0 { m += " · \(busy) non ripristinabili (percorso già occupato)" }
         return m
     }
+}
+
+@MainActor
+final class TrashLog: ObservableObject {
+    static let shared = TrashLog()
+    @Published private(set) var batches: [TrashBatch] = []
+
+    init() {
+        batches = TrashLogStore.load()
+        // il server MCP può aver aggiunto lotti mentre l'app era in background
+        NotificationCenter.default.addObserver(forName: NSApplication.didBecomeActiveNotification, object: nil, queue: .main) { [weak self] _ in
+            Task { @MainActor in self?.reload() }
+        }
+    }
+
+    func reload() { batches = TrashLogStore.load() }
+    func record(_ label: String, _ entries: [TrashEntry]) { TrashLogStore.append(label, entries); reload() }
+    var lastLabel: String? { batches.last.map { "\($0.label) (\($0.entries.count) elementi)" } }
+    func restoreLast() -> String { let m = TrashLogStore.restoreLast(); reload(); return m }
+}
+
+/// Percorsi che nessuna azione (GUI o MCP) può spostare nel Cestino: sistema, cartelle utente di primo livello,
+/// radici dei volumi e cartelle con credenziali.
+func isProtectedPath(_ path: String) -> Bool {
+    let h = NSHomeDirectory()
+    func check(_ raw: String) -> Bool {
+        let p = (raw as NSString).standardizingPath
+        let exact: Set<String> = ["/", "/System", "/Users", "/Library", "/Applications", "/usr", "/bin", "/sbin", "/etc", "/var", "/private",
+                                  "/Volumes", "/opt", "/cores", h, h + "/Library", h + "/Desktop", h + "/Documents", h + "/Downloads",
+                                  h + "/Pictures", h + "/Movies", h + "/Music", h + "/Applications"]
+        if exact.contains(p) { return true }
+        let comps = p.split(separator: "/")
+        if comps.count == 2 && comps[0] == "Volumes" { return true }
+        let prefixes = ["/System", "/usr", "/bin", "/sbin", "/etc", "/private/etc", "/private/var/db", "/Library/Apple",
+                        h + "/.ssh", h + "/.gnupg", h + "/.aws", h + "/Library/Keychains"]
+        return prefixes.contains { p == $0 || p.hasPrefix($0 + "/") }
+    }
+    return check(path) || check(URL(fileURLWithPath: path).resolvingSymlinksInPath().path)
 }
 
 // MARK: - Misuratore di dimensioni (coda con concorrenza limitata)
@@ -253,6 +297,24 @@ struct VolumeInfo: Identifiable, Hashable {
     let format: String
 }
 
+func currentVolumes() -> [VolumeInfo] {
+    let keys: [URLResourceKey] = [.volumeNameKey, .volumeTotalCapacityKey, .volumeAvailableCapacityForImportantUsageKey,
+                                  .volumeAvailableCapacityKey, .volumeIsInternalKey, .volumeIsEjectableKey,
+                                  .volumeIsRemovableKey, .volumeLocalizedFormatDescriptionKey]
+    var out: [VolumeInfo] = []
+    for u in FileManager.default.mountedVolumeURLs(includingResourceValuesForKeys: keys, options: [.skipHiddenVolumes]) ?? [] {
+        guard let v = try? u.resourceValues(forKeys: Set(keys)) else { continue }
+        let total = UInt64(max(0, v.volumeTotalCapacity ?? 0))
+        if total == 0 { continue }
+        let freeB = UInt64(max(0, Int(v.volumeAvailableCapacityForImportantUsage ?? Int64(v.volumeAvailableCapacity ?? 0))))
+        let internalVol = (v.volumeIsInternal ?? true) && !(v.volumeIsEjectable ?? false) && !(v.volumeIsRemovable ?? false)
+        out.append(VolumeInfo(name: v.volumeName ?? u.lastPathComponent, path: u.path, total: total, free: freeB, isInternal: internalVol,
+                              ejectable: (v.volumeIsEjectable ?? false) || (v.volumeIsRemovable ?? false) || !(v.volumeIsInternal ?? true),
+                              format: v.volumeLocalizedFormatDescription ?? ""))
+    }
+    return out.sorted { ($0.isInternal ? 0 : 1, $0.name) < ($1.isInternal ? 0 : 1, $1.name) }
+}
+
 @MainActor
 final class DiskMonitor: ObservableObject {
     static let shared = DiskMonitor()
@@ -272,22 +334,8 @@ final class DiskMonitor: ObservableObject {
     }
 
     func update() {
-        let keys: [URLResourceKey] = [.volumeNameKey, .volumeTotalCapacityKey, .volumeAvailableCapacityForImportantUsageKey,
-                                      .volumeAvailableCapacityKey, .volumeIsInternalKey, .volumeIsEjectableKey,
-                                      .volumeIsRemovableKey, .volumeLocalizedFormatDescriptionKey]
-        var out: [VolumeInfo] = []
-        for u in FileManager.default.mountedVolumeURLs(includingResourceValuesForKeys: keys, options: [.skipHiddenVolumes]) ?? [] {
-            guard let v = try? u.resourceValues(forKeys: Set(keys)) else { continue }
-            let total = UInt64(max(0, v.volumeTotalCapacity ?? 0))
-            if total == 0 { continue }
-            let freeB = UInt64(max(0, Int(v.volumeAvailableCapacityForImportantUsage ?? Int64(v.volumeAvailableCapacity ?? 0))))
-            let internalVol = (v.volumeIsInternal ?? true) && !(v.volumeIsEjectable ?? false) && !(v.volumeIsRemovable ?? false)
-            out.append(VolumeInfo(name: v.volumeName ?? u.lastPathComponent, path: u.path, total: total, free: freeB, isInternal: internalVol,
-                                  ejectable: (v.volumeIsEjectable ?? false) || (v.volumeIsRemovable ?? false) || !(v.volumeIsInternal ?? true),
-                                  format: v.volumeLocalizedFormatDescription ?? ""))
-        }
-        volumes = out.sorted { ($0.isInternal ? 0 : 1, $0.name) < ($1.isInternal ? 0 : 1, $1.name) }
-        free = out.first { $0.path == "/" }?.free ?? 0
+        volumes = currentVolumes()
+        free = volumes.first { $0.path == "/" }?.free ?? 0
     }
 
     func eject(_ v: VolumeInfo) {

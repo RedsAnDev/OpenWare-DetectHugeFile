@@ -2,6 +2,22 @@ import Foundation
 import SwiftUI
 
 // Modalità CLI di debug/benchmark:  DetectHugeFile --scan PATH [--top N]
+if CommandLine.arguments.contains("--mcp") {
+    runMCPServer()
+}
+// Solo per test locali: esegue lo spostamento nel Cestino senza finestra di conferma. NON è esposto via MCP.
+if let i = CommandLine.arguments.firstIndex(of: "--selftest-trash") {
+    let paths = Array(CommandLine.arguments[(i + 1)...])
+    Thread.detachNewThread {      // come nel server: il main thread resta libero per gli scanner
+        do {
+            let targets = try validateTrashPaths(paths)
+            let r = executeTrash(targets, label: "selftest")
+            print(String(data: try JSONSerialization.data(withJSONObject: r, options: [.sortedKeys]), encoding: .utf8) ?? "{}")
+        } catch let e as ToolError { print("RIFIUTATO: \(e.message)") } catch { print("ERRORE: \(error)") }
+        exit(0)
+    }
+    dispatchMain()
+}
 if CommandLine.arguments.contains("--check") {
     var gb = 1.0
     if let i = CommandLine.arguments.firstIndex(of: "--min-gb"), i + 1 < CommandLine.arguments.count { gb = Double(CommandLine.arguments[i + 1]) ?? 1 }

@@ -169,11 +169,7 @@ final class AppModel: ObservableObject {
         // scarta nodi il cui antenato è già selezionato
         let sel = selection.filter { n in !selection.contains { $0 !== n && n.isDescendant(of: $0) } }
         guard !sel.isEmpty else { return }
-        let blocked = sel.filter { n in
-            let comps = n.path.split(separator: "/")
-            let isVolumeRoot = comps.count == 2 && comps[0] == "Volumes"
-            return n.parent == nil || Self.protectedPaths.contains(n.path) || n.path.hasPrefix("/System/") || isVolumeRoot
-        }
+        let blocked = sel.filter { $0.parent == nil || isProtectedPath($0.path) }
         if !blocked.isEmpty {
             let a = NSAlert()
             a.alertStyle = .warning

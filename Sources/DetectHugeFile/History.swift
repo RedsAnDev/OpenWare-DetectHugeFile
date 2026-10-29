@@ -18,6 +18,61 @@ struct DeltaRow: Identifiable {
     var path: String { id }
 }
 
+enum SnapshotStore {
+    static var dir: URL {
+        let d = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0].appendingPathComponent("DetectHugeFile/snapshots")
+        try? FileManager.default.createDirectory(at: d, withIntermediateDirectories: true)
+        return d
+    }
+
+    static func loadAll() -> [Snapshot] {
+        let files = (try? FileManager.default.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil)) ?? []
+        let dec = JSONDecoder()
+        return files.compactMap { try? dec.decode(Snapshot.self, from: Data(contentsOf: $0)) }.sorted { $0.date < $1.date }
+    }
+
+    static func write(_ s: Snapshot) {
+        let url = dir.appendingPathComponent("\(Int(s.date.timeIntervalSince1970))-\(s.id.uuidString).json")
+        if let d = try? JSONEncoder().encode(s) { try? d.write(to: url, options: .atomic) }
+    }
+
+    /// Tiene le ultime 15 istantanee per radice.
+    static func prune(root: String) {
+        let same = loadAll().filter { $0.root == root }
+        guard same.count > 15 else { return }
+        let files = (try? FileManager.default.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil)) ?? []
+        for old in same.prefix(same.count - 15) {
+            for f in files where f.lastPathComponent.contains(old.id.uuidString) { try? FileManager.default.removeItem(at: f) }
+        }
+    }
+
+    static func deleteAll() {
+        ((try? FileManager.default.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil)) ?? []).forEach { try? FileManager.default.removeItem(at: $0) }
+    }
+}
+
+extension Snapshot {
+    /// Istantanea delle cartelle ≥ 20 MB di una scansione.
+    static func make(root: Node) -> Snapshot {
+        var dirs: [String: UInt64] = [:]
+        var stack = [root]
+        while let n = stack.popLast() {
+            for c in n.children where c.isDir && c.size >= 20 << 20 { dirs[c.path] = c.size; stack.append(c) }
+        }
+        return Snapshot(id: UUID(), date: Date(), root: root.path, total: root.size, dirs: dirs)
+    }
+}
+
+func computeDeltas(_ a: Snapshot, _ b: Snapshot, minMB: Int, onlyGrown: Bool) -> [DeltaRow] {
+    let minB = Int64(minMB) << 20
+    var out: [DeltaRow] = []
+    for p in Set(a.dirs.keys).union(b.dirs.keys) {
+        let r = DeltaRow(id: p, before: a.dirs[p] ?? 0, after: b.dirs[p] ?? 0)
+        if abs(r.delta) >= minB, !onlyGrown || r.delta > 0 { out.append(r) }
+    }
+    return out
+}
+
 @MainActor
 final class HistoryModel: ObservableObject {
     static let shared = HistoryModel()
@@ -26,18 +81,17 @@ final class HistoryModel: ObservableObject {
     @Published var toID: UUID?
     @Published var onlyGrown = false
     @Published var minMB = 20
-    private let dir: URL
 
     init() {
-        dir = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0].appendingPathComponent("DetectHugeFile/snapshots")
-        try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
         load()
+        // il server MCP può aver salvato nuove istantanee
+        NotificationCenter.default.addObserver(forName: NSApplication.didBecomeActiveNotification, object: nil, queue: .main) { [weak self] _ in
+            Task { @MainActor in self?.load() }
+        }
     }
 
     private func load() {
-        let files = (try? FileManager.default.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil)) ?? []
-        let dec = JSONDecoder()
-        snapshots = files.compactMap { try? dec.decode(Snapshot.self, from: Data(contentsOf: $0)) }.sorted { $0.date < $1.date }
+        snapshots = SnapshotStore.loadAll()
         pickDefaults()
     }
 
@@ -48,27 +102,11 @@ final class HistoryModel: ObservableObject {
         fromID = same.count > 1 ? same[same.count - 2].id : nil
     }
 
-    /// Salva un'istantanea della scansione (cartelle ≥ 20 MB) per i confronti futuri.
     func save(root: Node) {
-        var dirs: [String: UInt64] = [:]
-        var stack = [root]
-        while let n = stack.popLast() {
-            for c in n.children where c.isDir && c.size >= 20 << 20 { dirs[c.path] = c.size; stack.append(c) }
-        }
-        let snap = Snapshot(id: UUID(), date: Date(), root: root.path, total: root.size, dirs: dirs)
-        let url = dir.appendingPathComponent("\(Int(snap.date.timeIntervalSince1970))-\(snap.id.uuidString).json")
-        DispatchQueue.global(qos: .utility).async { if let d = try? JSONEncoder().encode(snap) { try? d.write(to: url) } }
-        snapshots.append(snap)
-        // tieni le ultime 15 per radice
-        let same = snapshots.filter { $0.root == snap.root }
-        if same.count > 15 {
-            for old in same.prefix(same.count - 15) {
-                snapshots.removeAll { $0.id == old.id }
-                let files = (try? FileManager.default.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil)) ?? []
-                for f in files where f.lastPathComponent.contains(old.id.uuidString) { try? FileManager.default.removeItem(at: f) }
-            }
-        }
-        pickDefaults()
+        let snap = Snapshot.make(root: root)
+        SnapshotStore.write(snap)
+        SnapshotStore.prune(root: snap.root)
+        load()
     }
 
     var from: Snapshot? { snapshots.first { $0.id == fromID } }
@@ -76,13 +114,7 @@ final class HistoryModel: ObservableObject {
 
     func rows() -> [DeltaRow] {
         guard let a = from, let b = to, a.id != b.id else { return [] }
-        let minB = Int64(minMB) << 20
-        var out: [DeltaRow] = []
-        for p in Set(a.dirs.keys).union(b.dirs.keys) {
-            let r = DeltaRow(id: p, before: a.dirs[p] ?? 0, after: b.dirs[p] ?? 0)
-            if abs(r.delta) >= minB, !onlyGrown || r.delta > 0 { out.append(r) }
-        }
-        return out
+        return computeDeltas(a, b, minMB: minMB, onlyGrown: onlyGrown)
     }
 
     func exportTable() -> ExportTable {
@@ -90,11 +122,7 @@ final class HistoryModel: ObservableObject {
                     rows: rows().sorted { $0.delta > $1.delta }.map { [$0.path, String($0.before), String($0.after), String($0.delta)] })
     }
 
-    func deleteAll() {
-        let files = (try? FileManager.default.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil)) ?? []
-        files.forEach { try? FileManager.default.removeItem(at: $0) }
-        snapshots = []; pickDefaults()
-    }
+    func deleteAll() { SnapshotStore.deleteAll(); load() }
 }
 
 private let histFmt: DateFormatter = { let f = DateFormatter(); f.dateFormat = "dd/MM/yy HH:mm"; return f }()

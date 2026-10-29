@@ -1,0 +1,11 @@
+{
+  "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/Sources/DetectHugeFile/App.swift" : {
+    "abi-baseline-json" : "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/.build/out/Intermediates.noindex/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/DetectHugeFile.abi.json",
+    "const-values" : "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/.build/out/Intermediates.noindex/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/DetectHugeFile-primary.swiftconstvalues",
+    "dependencies" : "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/.build/out/Intermediates.noindex/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/DetectHugeFile-primary.d",
+    "diagnostics" : "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/.build/out/Intermediates.noindex/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/DetectHugeFile-primary.dia",
+    "swiftdoc" : "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/.build/out/Intermediates.noindex/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/DetectHugeFile.swiftdoc",
+    "swiftmodule" : "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/.build/out/Intermediates.noindex/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/DetectHugeFile.swiftmodule",
+    "swiftsourceinfo" : "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/.build/out/Intermediates.noindex/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/DetectHugeFile.swiftsourceinfo"
+  }
+}

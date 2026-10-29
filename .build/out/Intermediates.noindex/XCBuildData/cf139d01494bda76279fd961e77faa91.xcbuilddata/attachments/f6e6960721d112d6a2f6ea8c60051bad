@@ -1,0 +1,76 @@
+{
+  "" : {
+    "const-values" : "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/.build/out/Intermediates.noindex/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/DetectHugeFile-primary.swiftconstvalues",
+    "dependencies" : "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/.build/out/Intermediates.noindex/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/DetectHugeFile-primary.d",
+    "diagnostics" : "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/.build/out/Intermediates.noindex/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/DetectHugeFile-primary.dia",
+    "emit-module-dependencies" : "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/.build/out/Intermediates.noindex/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/DetectHugeFile-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/.build/out/Intermediates.noindex/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/DetectHugeFile-primary-emit-module.dia",
+    "pch" : "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/.build/out/Intermediates.noindex/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/DetectHugeFile-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/.build/out/Intermediates.noindex/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/DetectHugeFile-primary.swiftdeps"
+  },
+  "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/Sources/DetectHugeFile/App.swift" : {
+    "index-unit-output-path" : "/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/App.o",
+    "llvm-bc" : "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/.build/out/Intermediates.noindex/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/App.bc",
+    "object" : "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/.build/out/Intermediates.noindex/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/App.o"
+  },
+  "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/Sources/DetectHugeFile/AppModel.swift" : {
+    "index-unit-output-path" : "/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/AppModel.o",
+    "llvm-bc" : "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/.build/out/Intermediates.noindex/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/AppModel.bc",
+    "object" : "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/.build/out/Intermediates.noindex/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/AppModel.o"
+  },
+  "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/Sources/DetectHugeFile/Artifacts.swift" : {
+    "index-unit-output-path" : "/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/Artifacts.o",
+    "llvm-bc" : "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/.build/out/Intermediates.noindex/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/Artifacts.bc",
+    "object" : "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/.build/out/Intermediates.noindex/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/Artifacts.o"
+  },
+  "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/Sources/DetectHugeFile/Duplicates.swift" : {
+    "index-unit-output-path" : "/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/Duplicates.o",
+    "llvm-bc" : "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/.build/out/Intermediates.noindex/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/Duplicates.bc",
+    "object" : "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/.build/out/Intermediates.noindex/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/Duplicates.o"
+  },
+  "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/Sources/DetectHugeFile/History.swift" : {
+    "index-unit-output-path" : "/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/History.o",
+    "llvm-bc" : "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/.build/out/Intermediates.noindex/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/History.bc",
+    "object" : "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/.build/out/Intermediates.noindex/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/History.o"
+  },
+  "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/Sources/DetectHugeFile/Infra.swift" : {
+    "index-unit-output-path" : "/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/Infra.o",
+    "llvm-bc" : "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/.build/out/Intermediates.noindex/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/Infra.bc",
+    "object" : "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/.build/out/Intermediates.noindex/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/Infra.o"
+  },
+  "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/Sources/DetectHugeFile/Node.swift" : {
+    "index-unit-output-path" : "/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/Node.o",
+    "llvm-bc" : "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/.build/out/Intermediates.noindex/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/Node.bc",
+    "object" : "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/.build/out/Intermediates.noindex/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/Node.o"
+  },
+  "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/Sources/DetectHugeFile/OutlineView.swift" : {
+    "index-unit-output-path" : "/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/OutlineView.o",
+    "llvm-bc" : "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/.build/out/Intermediates.noindex/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/OutlineView.bc",
+    "object" : "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/.build/out/Intermediates.noindex/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/OutlineView.o"
+  },
+  "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/Sources/DetectHugeFile/Scanner.swift" : {
+    "index-unit-output-path" : "/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/Scanner.o",
+    "llvm-bc" : "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/.build/out/Intermediates.noindex/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/Scanner.bc",
+    "object" : "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/.build/out/Intermediates.noindex/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/Scanner.o"
+  },
+  "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/Sources/DetectHugeFile/SystemTab.swift" : {
+    "index-unit-output-path" : "/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/SystemTab.o",
+    "llvm-bc" : "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/.build/out/Intermediates.noindex/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/SystemTab.bc",
+    "object" : "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/.build/out/Intermediates.noindex/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/SystemTab.o"
+  },
+  "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/Sources/DetectHugeFile/Treemap.swift" : {
+    "index-unit-output-path" : "/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/Treemap.o",
+    "llvm-bc" : "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/.build/out/Intermediates.noindex/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/Treemap.bc",
+    "object" : "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/.build/out/Intermediates.noindex/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/Treemap.o"
+  },
+  "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/Sources/DetectHugeFile/WellKnown.swift" : {
+    "index-unit-output-path" : "/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/WellKnown.o",
+    "llvm-bc" : "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/.build/out/Intermediates.noindex/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/WellKnown.bc",
+    "object" : "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/.build/out/Intermediates.noindex/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/WellKnown.o"
+  },
+  "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/Sources/DetectHugeFile/main.swift" : {
+    "index-unit-output-path" : "/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/main.o",
+    "llvm-bc" : "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/.build/out/Intermediates.noindex/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/main.bc",
+    "object" : "/Users/rossi/Workspace/LAB/OS/MacOS/DetectHugeFile/.build/out/Intermediates.noindex/DetectHugeFile.build/Release/DetectHugeFile-p.build/Objects-normal/arm64/main.o"
+  }
+}

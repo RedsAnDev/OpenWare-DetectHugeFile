@@ -6,7 +6,7 @@
 
 [![Release](https://img.shields.io/github/v/release/RedsAnDev/OpenWare-DetectHugeFile?style=for-the-badge&color=8C40D9&logo=github&label=release)](https://github.com/RedsAnDev/OpenWare-DetectHugeFile/releases)
 [![Download](https://img.shields.io/github/downloads/RedsAnDev/OpenWare-DetectHugeFile/total?style=for-the-badge&color=3373F2&logo=apple&logoColor=white&label=download)](https://github.com/RedsAnDev/OpenWare-DetectHugeFile/releases)
-[![Licenza MIT](https://img.shields.io/github/license/RedsAnDev/OpenWare-DetectHugeFile?style=for-the-badge&color=FF8C33)](LICENSE)
+[![Licenza GPLv3](https://img.shields.io/github/license/RedsAnDev/OpenWare-DetectHugeFile?style=for-the-badge&color=FF8C33)](LICENSE)
 
 ![macOS 13+](https://img.shields.io/badge/macOS-13%2B-000000?style=flat-square&logo=apple&logoColor=white)
 ![Apple Silicon + Intel](https://img.shields.io/badge/arch-arm64%20%7C%20x86__64-555555?style=flat-square&logo=apple&logoColor=white)
@@ -361,7 +361,15 @@ I dati dell'app (registro del Cestino, istantanee) sono in `~/Library/Applicatio
 
 ## Licenza
 
-Rilasciato con licenza [MIT](LICENSE).
+Software libero, rilasciato con licenza **[GNU GPL v3](LICENSE)** (o successiva, a tua scelta).
+
+Sei libero di usarlo, studiarlo, modificarlo e ridistribuirlo. Se distribuisci una versione modificata, devi
+farlo con la stessa licenza e rendere disponibile il codice sorgente.
+
+> Le versioni fino alla 1.1.0 incluse sono state pubblicate con licenza MIT e restano utilizzabili a quei termini.
+> Dalle versioni successive vale la GPL v3.
+
+Copyright © 2026 Andrea Rossi
 
 ---
 
@@ -378,7 +386,7 @@ Il progetto è vivo e le idee sono benvenute.
 
 <div align="center">
 
-<sub>Fatto con ❤️ e Swift · <a href="https://github.com/RedsAnDev/OpenWare-DetectHugeFile/releases">Releases</a> · <a href="LICENSE">MIT</a></sub>
+<sub>Fatto con ❤️ e Swift · <a href="https://github.com/RedsAnDev/OpenWare-DetectHugeFile/releases">Releases</a> · <a href="LICENSE">GPLv3</a></sub>
 
 </div>
 

@@ -1,4 +1,7 @@
 #!/bin/bash
+# DetectHugeFile — Copyright (C) 2026 Andrea Rossi
+# Software libero: GNU General Public License v3 o successiva.
+# Questo programma è distribuito SENZA ALCUNA GARANZIA. Vedi LICENSE e <https://www.gnu.org/licenses/>.
 # Crea DMG firmato e notarizzato con il profilo PERSONALE (team ERFG38SR6A).
 # Uso: ./release.sh [-v VERSIONE]      (default 1.0; build universale)
 set -euo pipefail

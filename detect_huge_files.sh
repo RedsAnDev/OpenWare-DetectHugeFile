@@ -1,4 +1,7 @@
 #!/bin/bash
+# DetectHugeFile — Copyright (C) 2026 Andrea Rossi
+# Software libero: GNU General Public License v3 o successiva.
+# Questo programma è distribuito SENZA ALCUNA GARANZIA. Vedi LICENSE e <https://www.gnu.org/licenses/>.
 # detect_huge_files.sh — elenca (SOLO LETTURA, non cancella nulla) i file/cartelle
 # giganti su macOS che di solito si possono eliminare per recuperare spazio.
 #

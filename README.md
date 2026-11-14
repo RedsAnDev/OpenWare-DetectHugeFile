@@ -10,6 +10,7 @@
 
 ![macOS 13+](https://img.shields.io/badge/macOS-13%2B-000000?style=flat-square&logo=apple&logoColor=white)
 ![Apple Silicon + Intel](https://img.shields.io/badge/arch-arm64%20%7C%20x86__64-555555?style=flat-square&logo=apple&logoColor=white)
+![Notarizzata](https://img.shields.io/badge/firma-Developer%20ID%20%2B%20notarizzata-5E5CE6?style=flat-square&logo=apple&logoColor=white)
 ![Swift 5.9](https://img.shields.io/badge/Swift-5.9-F05138?style=flat-square&logo=swift&logoColor=white)
 ![SwiftUI + AppKit](https://img.shields.io/badge/UI-SwiftUI%20%2B%20AppKit-0A84FF?style=flat-square)
 ![Zero dipendenze](https://img.shields.io/badge/dipendenze-zero-34C759?style=flat-square)

@@ -15,7 +15,7 @@
 ![SwiftUI + AppKit](https://img.shields.io/badge/UI-SwiftUI%20%2B%20AppKit-0A84FF?style=flat-square)
 ![Zero dipendenze](https://img.shields.io/badge/dipendenze-zero-34C759?style=flat-square)
 ![MCP server](https://img.shields.io/badge/MCP-server%20per%20Claude-D97757?style=flat-square)
-[![Ultimo commit](https://img.shields.io/github/last-commit/RedsAnDev/OpenWare-DetectHugeFile/dev?style=flat-square&color=8C40D9)](https://github.com/RedsAnDev/OpenWare-DetectHugeFile/commits/dev)
+[![Ultimo commit](https://img.shields.io/github/last-commit/RedsAnDev/OpenWare-DetectHugeFile/main?style=flat-square&color=8C40D9)](https://github.com/RedsAnDev/OpenWare-DetectHugeFile/commits/main)
 [![Issues](https://img.shields.io/github/issues/RedsAnDev/OpenWare-DetectHugeFile?style=flat-square&color=3373F2)](https://github.com/RedsAnDev/OpenWare-DetectHugeFile/issues)
 [![PR benvenute](https://img.shields.io/badge/PR-benvenute-34C759?style=flat-square)](https://github.com/RedsAnDev/OpenWare-DetectHugeFile/pulls)
 

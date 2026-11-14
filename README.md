@@ -1,14 +1,61 @@
-# DetectHugeFile
+<div align="center">
+
+<img src="assets/banner.svg" alt="DetectHugeFile — scopri dove se ne va lo spazio sul tuo Mac" width="100%">
+
+<br>
+
+[![Release](https://img.shields.io/github/v/release/RedsAnDev/OpenWare-DetectHugeFile?style=for-the-badge&color=8C40D9&logo=github&label=release)](https://github.com/RedsAnDev/OpenWare-DetectHugeFile/releases)
+[![Download](https://img.shields.io/github/downloads/RedsAnDev/OpenWare-DetectHugeFile/total?style=for-the-badge&color=3373F2&logo=apple&logoColor=white&label=download)](https://github.com/RedsAnDev/OpenWare-DetectHugeFile/releases)
+[![Licenza MIT](https://img.shields.io/github/license/RedsAnDev/OpenWare-DetectHugeFile?style=for-the-badge&color=FF8C33)](LICENSE)
+
+![macOS 13+](https://img.shields.io/badge/macOS-13%2B-000000?style=flat-square&logo=apple&logoColor=white)
+![Apple Silicon + Intel](https://img.shields.io/badge/arch-arm64%20%7C%20x86__64-555555?style=flat-square&logo=apple&logoColor=white)
+![Swift 5.9](https://img.shields.io/badge/Swift-5.9-F05138?style=flat-square&logo=swift&logoColor=white)
+![SwiftUI + AppKit](https://img.shields.io/badge/UI-SwiftUI%20%2B%20AppKit-0A84FF?style=flat-square)
+![Zero dipendenze](https://img.shields.io/badge/dipendenze-zero-34C759?style=flat-square)
+![MCP server](https://img.shields.io/badge/MCP-server%20per%20Claude-D97757?style=flat-square)
+[![Ultimo commit](https://img.shields.io/github/last-commit/RedsAnDev/OpenWare-DetectHugeFile/dev?style=flat-square&color=8C40D9)](https://github.com/RedsAnDev/OpenWare-DetectHugeFile/commits/dev)
+[![Issues](https://img.shields.io/github/issues/RedsAnDev/OpenWare-DetectHugeFile?style=flat-square&color=3373F2)](https://github.com/RedsAnDev/OpenWare-DetectHugeFile/issues)
+[![PR benvenute](https://img.shields.io/badge/PR-benvenute-34C759?style=flat-square)](https://github.com/RedsAnDev/OpenWare-DetectHugeFile/pulls)
+
+**[⬇️ Scarica](https://github.com/RedsAnDev/OpenWare-DetectHugeFile/releases/latest)** ·
+**[✨ Funzioni](#-perché-detecthugefile)** ·
+**[🗂️ Le tab](#-le-tab)** ·
+**[🤖 Server MCP](#-server-mcp-uso-da-claude)** ·
+**[🛠️ Compilare](#da-sorgenti)**
+
+</div>
+
+---
+
+## ✨ Perché DetectHugeFile
 
 App nativa per macOS che mostra **dove se ne va lo spazio su disco** e aiuta a recuperarlo in fretta:
 cartelle più pesanti, artefatti di build, cache note, duplicati, container, Homebrew e altro.
 
-- Scanner parallelo basato su `getattrlistbulk`: dimensioni identiche a `du`, 2–3 volte più veloce
-  (circa 1 s per 190.000 file, 40 s per una home da 5 milioni di file).
-- Nessuna cancellazione definitiva per i file: tutto passa dal **Cestino** ed è **ripristinabile**.
-- Solo lettura finché non confermi un'azione. C'è anche una **modalità a secco**.
+| | |
+|---|---|
+| ⚡ **Veloce** | Scanner parallelo basato su `getattrlistbulk`: dimensioni identiche a `du`, 2–3 volte più veloce (circa 1 s per 190.000 file, 40 s per una home da 5 milioni di file). |
+| 🛟 **Sicuro** | Nessuna cancellazione definitiva dei file: tutto passa dal **Cestino** ed è **ripristinabile**. Solo lettura finché non confermi un'azione, con **modalità a secco**. |
+| 🧠 **Intelligente** | Riconosce gli artefatti dal file manifest accanto, protegge i progetti attivi e le versioni attive di nvm/pyenv/rustup. |
+| 🗺️ **Visivo** | Albero con barre colorate, treemap interattiva, confronto fra scansioni per vedere cosa è cresciuto. |
+| 🤖 **Integrato con Claude** | Server **MCP** incluso: Claude analizza il disco e propone pulizie, ma cancella solo con la tua conferma. |
+| 🪶 **Leggero** | 100% Swift, nessuna dipendenza esterna, nessuna telemetria. |
 
-Requisiti: macOS 13 o successivo. Per compilare servono Xcode o i Command Line Tools (Swift 5.9+).
+> **Requisiti:** macOS 13 o successivo. Per compilare servono Xcode o i Command Line Tools (Swift 5.9+).
+
+## 📑 Indice
+
+[Installazione](#installazione) ·
+[Permessi](#permessi) ·
+[Le tab](#-le-tab) ·
+[Sicurezza](#sicurezza-e-annullamento) ·
+[Riga di comando](#uso-da-riga-di-comando) ·
+[Server MCP](#-server-mcp-uso-da-claude) ·
+[Release](#creare-e-pubblicare-una-release) ·
+[Struttura](#struttura-del-progetto) ·
+[Contribuire](#-contribuire) ·
+[Licenza](#licenza)
 
 ---
 
@@ -48,7 +95,7 @@ shasum -a 256 -c DetectHugeFile-<versione>.dmg.sha256   # dalla cartella che con
 
 ---
 
-## Le tab
+## 🗂️ Le tab
 
 La barra in alto contiene le tab (al centro) e le azioni della tab corrente (a destra). Le ultime due icone
 sono sempre **Ripristina** e il menu **⋯**.
@@ -163,7 +210,7 @@ Sono tutte di **sola lettura**. Il vecchio script `detect_huge_files.sh` resta d
 
 ---
 
-## Server MCP (uso da Claude)
+## 🤖 Server MCP (uso da Claude)
 
 L'eseguibile include un server **MCP** (Model Context Protocol) su stdio, così Claude può analizzare il disco e
 proporre pulizie con i tuoi stessi motori di scansione. Si registra una volta:
@@ -264,14 +311,6 @@ gh release create v1.2.0 dist/DetectHugeFile-1.2.0.dmg dist/DetectHugeFile-1.2.0
   --title "DetectHugeFile 1.2.0" --generate-notes
 ```
 
-Consiglio per il repository: aggiungi un `.gitignore` con
-```
-.build/
-dist/
-*.app
-```
-Il DMG va allegato alla Release, non committato.
-
 ---
 
 ## Struttura del progetto
@@ -282,6 +321,7 @@ build_app.sh            compila e crea DetectHugeFile.app (VERSION, ARCHS, SIGN_
 make_dmg.sh             crea il DMG (firma e notarizzazione opzionali)
 detect_huge_files.sh    vecchio report testuale da terminale
 Tools/make_icon.swift   genera l'icona (AppIcon.icns)
+assets/                 logo e banner (SVG) usati nel README
 Sources/DetectHugeFile/
   Scanner.swift         scanner parallelo getattrlistbulk
   Node.swift            albero cartelle, ordinamento, aggregazione
@@ -305,12 +345,6 @@ I dati dell'app (registro del Cestino, istantanee) sono in `~/Library/Applicatio
 
 ---
 
-## Licenza
-
-Rilasciato con licenza [MIT](LICENSE).
-
----
-
 ## Limiti noti
 
 - Le dimensioni sono **spazio allocato su disco** (come `du`), non la dimensione logica dei file.
@@ -321,3 +355,30 @@ Rilasciato con licenza [MIT](LICENSE).
 - Le dimensioni dei volumi Docker/Podman vengono da `system df -v` del motore, perché i dati stanno dentro la VM
   e non sono visibili dal filesystem del Mac. La dimensione dei singoli container non viene mostrata (è trascurabile
   rispetto a immagini e volumi).
+
+---
+
+## Licenza
+
+Rilasciato con licenza [MIT](LICENSE).
+
+---
+
+## 🤝 Contribuire
+
+Il progetto è vivo e le idee sono benvenute.
+
+- 🐛 **Segnala un bug** o proponi una funzione aprendo una [issue](https://github.com/RedsAnDev/OpenWare-DetectHugeFile/issues).
+- 🔧 **Invia una PR**: lavora sul branch `dev`, compila con `./build_app.sh` e prova le modalità da riga di comando
+  (`--scan`, `--artifacts`…) prima di aprirla.
+- 🧭 Regola d'oro: ogni azione che cancella deve passare dal **Cestino**, essere **ripristinabile** e rispettare la
+  **modalità a secco**. Le eccezioni vanno dichiarate nella conferma all'utente.
+- 🧩 Nuovi "colpevoli noti" o tipi di artefatto sono i contributi più semplici: vedi `WellKnown.swift` e `Artifacts.swift`.
+
+<div align="center">
+
+<sub>Fatto con ❤️ e Swift · <a href="https://github.com/RedsAnDev/OpenWare-DetectHugeFile/releases">Releases</a> · <a href="LICENSE">MIT</a></sub>
+
+</div>
+
+---

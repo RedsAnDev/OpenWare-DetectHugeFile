@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-label="DetectHugeFile">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3373F2"/>
+      <stop offset="1" stop-color="#8C40D9"/>
+    </linearGradient>
+  </defs>
+  <rect x="15" y="15" width="226" height="226" rx="51" fill="url(#bg)"/>
+  <circle cx="128" cy="128" r="70" fill="#fff" fill-opacity=".35"/>
+  <path d="M128 128 L128 58 A70 70 0 1 1 67.4 163 Z" fill="#fff"/>
+  <path d="M135.7 120.3 L204.6 108.1 A70 70 0 0 0 141.8 50.6 Z" fill="#FF8C33"/>
+</svg>

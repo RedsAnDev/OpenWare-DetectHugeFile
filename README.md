@@ -4,9 +4,9 @@
 
 <br>
 
-[![Release](https://img.shields.io/github/v/release/RedsAnDev/OpenWare-DetectHugeFile?style=for-the-badge&color=8C40D9&logo=github&label=release)](https://github.com/RedsAnDev/OpenWare-DetectHugeFile/releases)
-[![Download](https://img.shields.io/github/downloads/RedsAnDev/OpenWare-DetectHugeFile/total?style=for-the-badge&color=3373F2&logo=apple&logoColor=white&label=download)](https://github.com/RedsAnDev/OpenWare-DetectHugeFile/releases)
-[![Licenza GPLv3](https://img.shields.io/github/license/RedsAnDev/OpenWare-DetectHugeFile?style=for-the-badge&color=FF8C33)](LICENSE)
+[![Release](https://img.shields.io/github/v/release/RedsAnDev/OpenWare-DetectHugeFile?style=for-the-badge&cacheSeconds=3600&color=8C40D9&logo=github&label=release)](https://github.com/RedsAnDev/OpenWare-DetectHugeFile/releases)
+[![Download](https://img.shields.io/github/downloads/RedsAnDev/OpenWare-DetectHugeFile/total?style=for-the-badge&cacheSeconds=3600&color=3373F2&logo=apple&logoColor=white&label=download)](https://github.com/RedsAnDev/OpenWare-DetectHugeFile/releases)
+[![Licenza GPLv3](https://img.shields.io/github/license/RedsAnDev/OpenWare-DetectHugeFile?style=for-the-badge&cacheSeconds=3600&color=FF8C33)](LICENSE)
 
 ![macOS 13+](https://img.shields.io/badge/macOS-13%2B-000000?style=flat-square&logo=apple&logoColor=white)
 ![Apple Silicon + Intel](https://img.shields.io/badge/arch-arm64%20%7C%20x86__64-555555?style=flat-square&logo=apple&logoColor=white)
@@ -15,8 +15,8 @@
 ![SwiftUI + AppKit](https://img.shields.io/badge/UI-SwiftUI%20%2B%20AppKit-0A84FF?style=flat-square)
 ![Zero dipendenze](https://img.shields.io/badge/dipendenze-zero-34C759?style=flat-square)
 ![MCP server](https://img.shields.io/badge/MCP-server%20per%20Claude-D97757?style=flat-square)
-[![Ultimo commit](https://img.shields.io/github/last-commit/RedsAnDev/OpenWare-DetectHugeFile/main?style=flat-square&color=8C40D9)](https://github.com/RedsAnDev/OpenWare-DetectHugeFile/commits/main)
-[![Issues](https://img.shields.io/github/issues/RedsAnDev/OpenWare-DetectHugeFile?style=flat-square&color=3373F2)](https://github.com/RedsAnDev/OpenWare-DetectHugeFile/issues)
+[![Ultimo commit](https://img.shields.io/github/last-commit/RedsAnDev/OpenWare-DetectHugeFile/main?style=flat-square&cacheSeconds=3600&color=8C40D9)](https://github.com/RedsAnDev/OpenWare-DetectHugeFile/commits/main)
+[![Issues](https://img.shields.io/github/issues/RedsAnDev/OpenWare-DetectHugeFile?style=flat-square&cacheSeconds=3600&color=3373F2)](https://github.com/RedsAnDev/OpenWare-DetectHugeFile/issues)
 [![PR benvenute](https://img.shields.io/badge/PR-benvenute-34C759?style=flat-square)](https://github.com/RedsAnDev/OpenWare-DetectHugeFile/pulls)
 
 **[⬇️ Scarica](https://github.com/RedsAnDev/OpenWare-DetectHugeFile/releases/latest)** ·

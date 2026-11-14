@@ -1,3 +1,15 @@
+// DetectHugeFile — mostra dove se ne va lo spazio su disco del Mac.
+// Copyright (C) 2026 Andrea Rossi
+//
+// Questo programma è software libero: puoi ridistribuirlo e/o modificarlo
+// secondo i termini della GNU General Public License, versione 3 o (a tua
+// scelta) successiva, pubblicata dalla Free Software Foundation.
+//
+// Questo programma è distribuito nella speranza che sia utile, ma SENZA
+// ALCUNA GARANZIA; senza neppure la garanzia implicita di COMMERCIABILITÀ
+// o IDONEITÀ PER UNO SCOPO PARTICOLARE. Vedi la GNU General Public License
+// per maggiori dettagli: <https://www.gnu.org/licenses/>.
+
 import SwiftUI
 
 struct DetectHugeFileApp: App {
